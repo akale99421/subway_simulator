@@ -16,7 +16,7 @@ struct EventComparator {
 };
 
 
-void print(std::string input_string,std::priority_queue<Event*, std::vector<Event*>, EventComparator> time) {
+void print(std::string input_string,std::priority_queue<Event*, std::vector<Event*>, EventComparator> time) { //passing by value
     std::cout << input_string << std::endl;
     while (!time.empty()) {
         Event* event = time.top();
@@ -39,6 +39,7 @@ int main(){
     print("Before", time);
     std::cout << time.top()->execute();
     time.pop();
+    print("After", time);
     std::cout << time.top()->execute();
     time.pop();
     std::cout << time.top()->execute();
