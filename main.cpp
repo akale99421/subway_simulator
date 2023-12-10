@@ -21,16 +21,13 @@ struct EventComparator {
   }
 };
 
-void print(std::string input_string,
-  std::priority_queue < Event * ,
-  std::vector < Event * > ,
-  EventComparator > time_copy) { //passing by value
-  std::cout << input_string << std::endl;
-  while (!time_copy.empty()) {
-    Event * event = time_copy.top();
-    time_copy.pop();
-    std::cout << event -> get_timestamp() << " " << event -> get_priority_within_timestamp() << std::endl;
-  }
+void print(std::string input_string, std::priority_queue < Event * , std::vector < Event * > , EventComparator > time_copy) { //passing by value
+    std::cout << input_string << std::endl;
+    while (!time_copy.empty()) {
+        Event * event = time_copy.top();
+        time_copy.pop();
+        std::cout << event -> get_timestamp() << " " << event -> get_priority_within_timestamp() << std::endl;
+    }
 }
 
 int main() {
