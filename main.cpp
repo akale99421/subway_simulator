@@ -14,6 +14,24 @@
 
 #include "scripts/headers/Person.h"
 
+#include <random>
+
+const int INIT_PASSENGER_EVENTS = 100;
+
+const int START_TIME = 0;
+
+const int END_TIME = 100;
+
+std::random_device rand_dev;
+std::mt19937 generator(rand_dev());
+
+template<typename T>
+T random(T start, T end) {
+    std::uniform_int_distribution<T> distr(start, end);
+    return distr(generator);
+}
+
+
 const std::string STATIONS[10] = {
     "Delancey St-Essex St",
     "Broadway-Lafayette St",
@@ -26,6 +44,10 @@ const std::string STATIONS[10] = {
     "5 Av/53 St",
     "Lexington Av/53 St"
 };
+
+const int START_INDEX = 0;
+
+const int END_INDEX = sizeof(STATIONS)/sizeof(std::string) - 1;
 
 struct EventComparator {
   bool operator()(const Event * lhs,
@@ -59,7 +81,6 @@ void print(std::string input_string, std::map <std::string,std::vector < Person 
 
 int main() {
   
-  
   std::priority_queue < Event * , std::vector < Event * > , EventComparator > time;
   time = std::priority_queue < Event * , std::vector < Event * > , EventComparator > ();
 
@@ -69,14 +90,18 @@ int main() {
     waiting_list[STATIONS[i]] = std::vector < Person >();
   }
   
-  Event * event = createPassengerEvent(7, 
-                                        2, 
-                                        "Delancey St-Essex St",
-                                        &waiting_list["Delancey St-Essex St"],
-                                        "23 St");
+  for (int i = 0; i< INIT_PASSENGER_EVENTS; i++){
+      int start_station_index = random(START_INDEX, END_INDEX-1);
+      int end_station_index = random(start_station_index+1, END_INDEX);
+      std::cout << "start_station_index: " << start_station_index;
+      std::cout << " end_station_index: " << end_station_index << std::endl;
+      time.push(createPassengerEvent(random(START_TIME, END_TIME),
+                                      2, 
+                                      STATIONS[start_station_index],
+                                      &waiting_list[STATIONS[start_station_index]],
+                                      STATIONS[end_station_index]));
+  }
 
-  time.push(event);
-  std::cout << sizeof(*event);
   
   print("Event Queue before loop: ", time);
   std::cout << "----------------" << std::endl;
@@ -87,11 +112,12 @@ int main() {
   while (!time.empty()) {
     Event * event = time.top();
     std::cout<<event->execute();
-    time.pop();
     delete event;
+    time.pop();
   }
 
   print("Event Queue after loop: ", time);
   std::cout << "----------------" << std::endl;
   print("Waiting List after loop: ", waiting_list);
+  return 0;
 }
