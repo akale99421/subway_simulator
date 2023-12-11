@@ -16,8 +16,10 @@ public:
 
     int get_timestamp() const { return timestamp; }
     int get_priority_within_timestamp() const { return priority_within_stamp; }
+    virtual std::string get_event_type() const { return std::string("Event"); }
 
     virtual std::string execute() = 0;
+   
 
 private:
     int timestamp;

@@ -42,7 +42,7 @@ void print(std::string input_string, std::priority_queue < Event * , std::vector
     while (!time_copy.empty()) {
         Event * event = time_copy.top();
         time_copy.pop();
-        std::cout << event -> get_timestamp() << " " << event -> get_priority_within_timestamp() << std::endl;
+        std::cout << event -> get_timestamp() << " " << event -> get_priority_within_timestamp() << " " << event -> get_event_type() << std::endl;
     }
 }
 
@@ -84,7 +84,10 @@ int main() {
   time.push(event2);
   
   print("Event Queue before loop: ", time);
+  std::cout << "----------------" << std::endl;
   print("Waiting List before loop: ", waiting_list);
+  std::cout << "----------------" << std::endl;
+
 
   while (!time.empty()) {
     Event * event = time.top();
@@ -94,6 +97,7 @@ int main() {
   }
 
   print("Event Queue after loop: ", time);
+  std::cout << "----------------" << std::endl;
   print("Waiting List after loop: ", waiting_list);
 
 }

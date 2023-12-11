@@ -14,6 +14,7 @@ public:
     PassengerEvent(int timestamp, int priority_within_stamp);
     PassengerEvent(int timestamp, int priority_within_stamp, std::string start_stop_name,
                     std::vector < Person >* start_stop, std::string end_stop);
+    std::string get_event_type() const override { return std::string("Passenger Event"); }
 private:
     std::vector < Person > * start_stop;
     std::string start_stop_name;
