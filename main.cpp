@@ -69,13 +69,20 @@ int main() {
     waiting_list[STATIONS[i]] = std::vector < Person >();
   }
   
-  Event * event = createPassengerEvent(1, 
+  Event * event = createPassengerEvent(7, 
                                         2, 
                                         std::string("Delancey St-Essex St"),
                                         &waiting_list["Delancey St-Essex St"],
                                         std::string("23 St"));
-  time.push(event);
 
+  Event * event2 = createPassengerEvent(2,
+                                        1,
+                                        std::string("5 Av/53 St"),
+                                        &waiting_list["5 Av/53 St"],
+                                        std::string("Lexington Av/53 St"));
+  time.push(event);
+  time.push(event2);
+  
   print("Event Queue before loop: ", time);
   print("Waiting List before loop: ", waiting_list);
 
