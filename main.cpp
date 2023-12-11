@@ -6,7 +6,7 @@
 
 #include "scripts/headers/Event.h"
 
-#include "scripts/headers/PassengerEvent.h"
+#include "scripts/headers/EventFactory.h"
 
 #include <vector>
 

@@ -12,7 +12,4 @@ public:
     PassengerEvent(int timestamp, int priority_within_stamp);
 };
 
-Event* createPassengerEvent(int timestamp, int priority_within_stamp);
-Event* createPassengerEvent();
-
 #endif

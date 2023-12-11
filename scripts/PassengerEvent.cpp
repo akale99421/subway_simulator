@@ -13,11 +13,3 @@ std::string PassengerEvent::execute(){
              std::to_string(get_priority_within_timestamp())
              + "\n";
 };
-
-Event* createPassengerEvent(int timestamp, int priority_within_stamp) {
-    return new PassengerEvent(timestamp, priority_within_stamp);
-}
-
-Event* createPassengerEvent() {
-    return new PassengerEvent();
-}
