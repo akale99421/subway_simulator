@@ -1,4 +1,5 @@
 subway_sim:
+	mkdir -p bin
 	g++ -o bin/subway_simulator main.cpp scripts/*.cpp
 run:
 	./bin/subway_simulator
