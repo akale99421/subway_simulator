@@ -1,4 +1,4 @@
 subway_sim:
-	g++ -o bin/subway_simulator main.cpp scripts/PassengerEvent.cpp
+	g++ -o bin/subway_simulator main.cpp scripts/*.cpp
 run:
 	./bin/subway_simulator
