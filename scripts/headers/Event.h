@@ -10,8 +10,8 @@ public:
     Event() : timestamp(), priority_within_stamp() {}
 
     void set_data(int timestamp, int priority_within_stamp) {
-        this->timestamp = timestamp;
-        this->priority_within_stamp = priority_within_stamp;
+        timestamp = timestamp;
+        priority_within_stamp = priority_within_stamp;
     }
 
     int get_timestamp() const { return timestamp; }

@@ -10,6 +10,23 @@
 
 #include <vector>
 
+#include <map>
+
+#include "scripts/headers/Person.h"
+
+const std::string STATIONS[10] = {
+    "Delancey St-Essex St",
+    "Broadway-Lafayette St",
+    "W 4 St-Washington Sq",
+    "14 St-Union Sq",
+    "23 St",
+    "34 St-Herald Sq",
+    "42 St-Bryant Park",
+    "47-50 Sts-Rockefeller Ctr",
+    "5 Av/53 St",
+    "Lexington Av/53 St"
+};
+
 struct EventComparator {
   bool operator()(const Event * lhs,
     const Event * rhs) const {
@@ -29,25 +46,47 @@ void print(std::string input_string, std::priority_queue < Event * , std::vector
     }
 }
 
+void print(std::string input_string, std::map <std::string,std::vector < Person >> waiting_list_copy) { //passing by value
+    std::cout << input_string << std::endl;
+    for (int i = 0; i < sizeof(STATIONS)/sizeof(std::string); i++) {
+        std::cout << std::string(STATIONS[i]) <<"\n";
+        std::vector < Person > people = waiting_list_copy[STATIONS[i]];
+        for (int j = 0; j < people.size(); j++) {
+            std::cout << "\t" << people[j].get_end_stop() << std::endl;
+        }
+    }
+}
+
 int main() {
+  
+  
   std::priority_queue < Event * , std::vector < Event * > , EventComparator > time;
   time = std::priority_queue < Event * , std::vector < Event * > , EventComparator > ();
-  Event * event = createPassengerEvent(1, 10);
-  Event * event2 = createPassengerEvent();
-  event2 -> set_data(3, 11);
-  Event * event3 = createPassengerEvent(3, 15);
-  Event * event4 = createPassengerEvent(1, 12);
+
+  std::map <std::string,std::vector < Person >> waiting_list = std::map <std::string,std::vector < Person >>();
+  
+  for (int i = 0; i < sizeof(STATIONS)/sizeof(std::string); i++) {
+    waiting_list[STATIONS[i]] = std::vector < Person >();
+  }
+  
+  Event * event = createPassengerEvent(1, 
+                                        2, 
+                                        std::string("Delancey St-Essex St"),
+                                        &waiting_list["Delancey St-Essex St"],
+                                        std::string("23 St"));
   time.push(event);
-  time.push(event2);
-  time.push(event3);
-  time.push(event4);
-  print("Before", time);
+
+  print("Event Queue before loop: ", time);
+  print("Waiting List before loop: ", waiting_list);
+
   while (!time.empty()) {
     Event * event = time.top();
-    std::cout << event -> execute();
+    std::cout<<event->execute();
     time.pop();
     delete event;
   }
-  print("After", time);
+
+  print("Event Queue after loop: ", time);
+  print("Waiting List after loop: ", waiting_list);
 
 }
