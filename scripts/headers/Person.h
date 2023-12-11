@@ -6,7 +6,7 @@
 class Person {
     public:
         Person();
-        Person(std::string end_stop);
+        Person(std::string nd_stop);
         std::string get_end_stop();
         std::string get_start_stop();
     private:

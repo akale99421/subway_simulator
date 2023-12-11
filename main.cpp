@@ -49,7 +49,7 @@ void print(std::string input_string, std::priority_queue < Event * , std::vector
 void print(std::string input_string, std::map <std::string,std::vector < Person >> waiting_list_copy) { //passing by value
     std::cout << input_string << std::endl;
     for (int i = 0; i < sizeof(STATIONS)/sizeof(std::string); i++) {
-        std::cout << std::string(STATIONS[i]) <<"\n";
+        std::cout << STATIONS[i] <<"\n";
         std::vector < Person > people = waiting_list_copy[STATIONS[i]];
         for (int j = 0; j < people.size(); j++) {
             std::cout << "\t" << people[j].get_end_stop() << std::endl;
@@ -71,17 +71,11 @@ int main() {
   
   Event * event = createPassengerEvent(7, 
                                         2, 
-                                        std::string("Delancey St-Essex St"),
+                                        "Delancey St-Essex St",
                                         &waiting_list["Delancey St-Essex St"],
-                                        std::string("23 St"));
+                                        "23 St");
 
-  Event * event2 = createPassengerEvent(2,
-                                        1,
-                                        std::string("5 Av/53 St"),
-                                        &waiting_list["5 Av/53 St"],
-                                        std::string("Lexington Av/53 St"));
   time.push(event);
-  time.push(event2);
   
   print("Event Queue before loop: ", time);
   std::cout << "----------------" << std::endl;
@@ -93,11 +87,10 @@ int main() {
     Event * event = time.top();
     std::cout<<event->execute();
     time.pop();
-    delete event;
   }
 
   print("Event Queue after loop: ", time);
   std::cout << "----------------" << std::endl;
   print("Waiting List after loop: ", waiting_list);
-
+  Event * event3 =createPassengerEvent();
 }

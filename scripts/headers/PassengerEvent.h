@@ -2,7 +2,7 @@
 // Abstract event class that will be extened by events scheduled on the priority queue
 #include <string>
 #include "Event.h"
-#include "vector"
+#include <vector>
 #include "Person.h"
 #ifndef PASSENGER_EVENT_H
 #define PASSENGER_EVENT_H
@@ -10,11 +10,12 @@
 class PassengerEvent : public Event {
 public:
     PassengerEvent();
-    std::string execute() override;
+    ~PassengerEvent(){delete start_stop;};
     PassengerEvent(int timestamp, int priority_within_stamp);
     PassengerEvent(int timestamp, int priority_within_stamp, std::string start_stop_name,
                     std::vector < Person >* start_stop, std::string end_stop);
-    std::string get_event_type() const override { return std::string("Passenger Event"); }
+    std::string get_event_type() const override { return "Passenger Event"; };
+    std::string execute() override;
 private:
     std::vector < Person > * start_stop;
     std::string start_stop_name;
