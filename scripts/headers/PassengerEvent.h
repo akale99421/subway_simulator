@@ -10,7 +10,6 @@
 class PassengerEvent : public Event {
 public:
     PassengerEvent();
-    ~PassengerEvent(){delete start_stop;};
     PassengerEvent(int timestamp, int priority_within_stamp);
     PassengerEvent(int timestamp, int priority_within_stamp, std::string start_stop_name,
                     std::vector < Person >* start_stop, std::string end_stop);

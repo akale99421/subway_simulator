@@ -76,6 +76,7 @@ int main() {
                                         "23 St");
 
   time.push(event);
+  std::cout << sizeof(*event);
   
   print("Event Queue before loop: ", time);
   std::cout << "----------------" << std::endl;
@@ -87,10 +88,10 @@ int main() {
     Event * event = time.top();
     std::cout<<event->execute();
     time.pop();
+    delete event;
   }
 
   print("Event Queue after loop: ", time);
   std::cout << "----------------" << std::endl;
   print("Waiting List after loop: ", waiting_list);
-  Event * event3 =createPassengerEvent();
 }

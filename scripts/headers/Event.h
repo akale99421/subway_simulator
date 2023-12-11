@@ -9,7 +9,6 @@ public:
     Event(int timestamp, int priority_within_stamp) : timestamp(timestamp), priority_within_stamp(priority_within_stamp) {};
     Event() : timestamp(), priority_within_stamp() {};
     virtual ~Event() {};
-
     void set_data(int timestamp, int priority_within_stamp) {
         timestamp = timestamp;
         priority_within_stamp = priority_within_stamp;
