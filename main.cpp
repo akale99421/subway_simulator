@@ -16,7 +16,7 @@
 
 #include <random>
 
-const int INIT_PASSENGER_EVENTS = 100;
+const int INIT_PASSENGER_EVENTS = 1000;
 
 const int START_TIME = 0;
 
