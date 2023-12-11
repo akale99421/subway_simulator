@@ -6,10 +6,9 @@
 
 #include "scripts/headers/Event.h"
 
-#include <vector>
+#include "scripts/headers/PassengerEvent.h"
 
-Event * createPassengerEvent(int timestamp, int priority_within_stamp); // This is forward declaration!!!!
-Event * createPassengerEvent();
+#include <vector>
 
 struct EventComparator {
   bool operator()(const Event * lhs,
