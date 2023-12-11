@@ -20,7 +20,7 @@ const int INIT_PASSENGER_EVENTS = 1000;
 
 const int START_TIME = 0;
 
-const int END_TIME = 100;
+const int END_TIME = 1440;
 
 std::random_device rand_dev;
 std::mt19937 generator(rand_dev());
@@ -93,21 +93,12 @@ int main() {
   for (int i = 0; i< INIT_PASSENGER_EVENTS; i++){
       int start_station_index = random(START_INDEX, END_INDEX-1);
       int end_station_index = random(start_station_index+1, END_INDEX);
-      std::cout << "start_station_index: " << start_station_index;
-      std::cout << " end_station_index: " << end_station_index << std::endl;
       time.push(createPassengerEvent(random(START_TIME, END_TIME),
                                       2, 
                                       STATIONS[start_station_index],
                                       &waiting_list[STATIONS[start_station_index]],
                                       STATIONS[end_station_index]));
   }
-
-  
-  print("Event Queue before loop: ", time);
-  std::cout << "----------------" << std::endl;
-  print("Waiting List before loop: ", waiting_list);
-  std::cout << "----------------" << std::endl;
-
 
   while (!time.empty()) {
     Event * event = time.top();
