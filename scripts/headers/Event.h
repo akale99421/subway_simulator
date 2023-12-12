@@ -21,7 +21,7 @@ public:
     virtual std::string execute() = 0;
    
 
-private:
+protected:
     int timestamp;
     int priority_within_stamp;
 };
