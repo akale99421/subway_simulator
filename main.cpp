@@ -14,6 +14,8 @@
 
 #include "scripts/headers/Person.h"
 
+#include "scripts/headers/Exceptions.h"
+
 #include <random>
 
 const int INIT_PASSENGER_EVENTS = 1000;
@@ -102,7 +104,17 @@ int main() {
 
   while (!time.empty()) {
     Event * event = time.top();
-    std::cout<<event->execute();
+    if (event->get_event_type() == "PassengerEvent") {
+      std::cout<<event->execute();
+    }
+    else if (event-> get_event_type() == "SubwayCarEvent"){
+
+    }
+    else{
+      //Create new exception called event not found
+      throw EventNotFoundException();
+    }
+
     delete event;
     time.pop();
   }
