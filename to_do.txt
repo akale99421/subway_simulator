@@ -1,0 +1,6 @@
+Create adjacency list with weights to run Djikstra's on top of. Ensure transfers are costlier than staying on the train (inherent cost associated with moving between trains e.g. moving from the 5 to the 6 is more expensive regardless of wait time.
+
+Eventually consider adding wait times dynamically based on estimated next arrival time.
+
+Refactor the person event class to return start and stop postiions. Then from there, can run positions through a function (implemented
+elsewhere) that returns the appropriate start position for a new person. Potentially we will add their full path later to the person class.
