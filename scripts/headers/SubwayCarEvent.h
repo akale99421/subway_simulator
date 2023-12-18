@@ -8,11 +8,11 @@
 
 class SubwayCarEvent : public Event {
 public:
-    SubwayCarEvent(int timestamp, int priority_within_stamp, std::string next_stop, SubwayCar* car);
+    //SubwayCarEvent(int timestamp, int priority_within_stamp, std::string next_stop, SubwayCar* car);
     ~SubwayCarEvent();
     std::string get_event_type() const override { return "Subway Car Event"; };
     int reschedule(int new_timestamp);
-    std::string execute() override;
+    std::string execute();
 private:
     std::string next_stop;
     SubwayCar * car;

@@ -11,12 +11,14 @@ class PassengerEvent : public Event {
 public:
     PassengerEvent();
     PassengerEvent(int timestamp, int priority_within_stamp);
-    PassengerEvent(int timestamp, int priority_within_stamp, std::string start_stop_name,
-                    std::vector < Person >* start_stop, std::string end_stop);
+    PassengerEvent(int timestamp, 
+                    int priority_within_stamp, 
+                    std::string start_stop_name,
+                     std::string end_stop);
+    std::string get_start_stop_name() const;
     std::string get_event_type() const override { return "Passenger Event"; };
-    std::string execute() override;
+    Person* execute();
 private:
-    std::vector < Person > * start_stop;
     std::string start_stop_name;
     std::string end_stop;
 };

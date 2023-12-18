@@ -7,7 +7,7 @@ PassengerEvent* createPassengerEvent(int timestamp, int priority_within_stamp);
 
 PassengerEvent* createPassengerEvent();
 
-PassengerEvent* createPassengerEvent(int timestamp, int priority_within_stamp,std::string start_stop_name, std::vector < Person >* start_stop, std::string end_stop);
+PassengerEvent* createPassengerEvent(int timestamp, int priority_within_stamp,std::string start_stop_name, std::string end_stop);
 
 //CarEvent* createCarEvent(int timestamp, int priority_within_stamp, std::string start_stop_name, std::vector < Person >* start_stop, std::string end_stop);
 

@@ -6,6 +6,10 @@
 
 #include "scripts/headers/Event.h"
 
+#include "scripts/headers/PassengerEvent.h"
+
+#include "scripts/headers/SubwayCarEvent.h"
+
 #include "scripts/headers/EventFactory.h"
 
 #include <vector>
@@ -18,7 +22,7 @@
 
 #include <random>
 
-const int INIT_PASSENGER_EVENTS = 1000;
+const int INIT_PASSENGER_EVENTS = 100;
 
 const int START_TIME = 0;
 
@@ -61,7 +65,8 @@ struct EventComparator {
   }
 };
 
-void print(std::string input_string, std::priority_queue < Event * , std::vector < Event * > , EventComparator > time_copy) { //passing by value
+void print(std::string input_string, 
+            std::priority_queue < Event * , std::vector < Event * > , EventComparator > time_copy) { //passing by value
     std::cout << input_string << std::endl;
     while (!time_copy.empty()) {
         Event * event = time_copy.top();
@@ -70,13 +75,15 @@ void print(std::string input_string, std::priority_queue < Event * , std::vector
     }
 }
 
-void print(std::string input_string, std::map <std::string,std::vector < Person >> waiting_list_copy) { //passing by value
+void print(std::string input_string, 
+            std::map <std::string,std::queue < Person* >> waiting_list_copy) { //passing by value
     std::cout << input_string << std::endl;
     for (int i = 0; i < sizeof(STATIONS)/sizeof(std::string); i++) {
         std::cout << STATIONS[i] <<"\n";
-        std::vector < Person > people = waiting_list_copy[STATIONS[i]];
+        std::queue < Person* > people = waiting_list_copy[STATIONS[i]];
         for (int j = 0; j < people.size(); j++) {
-            std::cout << "\t" << people[j].get_end_stop() << std::endl;
+            std::cout << "\t" << people.front()->get_end_stop() << std::endl;
+            people.pop();
         }
     }
 }
@@ -86,10 +93,10 @@ int main() {
   std::priority_queue < Event * , std::vector < Event * > , EventComparator > time;
   time = std::priority_queue < Event * , std::vector < Event * > , EventComparator > ();
 
-  std::map <std::string,std::vector < Person >> waiting_list = std::map <std::string,std::vector < Person >>();
+  std::map <std::string,std::queue < Person* >> waiting_list = std::map <std::string,std::queue < Person* >>();
   
   for (int i = 0; i < sizeof(STATIONS)/sizeof(std::string); i++) {
-    waiting_list[STATIONS[i]] = std::vector < Person >();
+    waiting_list[STATIONS[i]] = std::queue < Person* >();
   }
   
   for (int i = 0; i< INIT_PASSENGER_EVENTS; i++){
@@ -98,29 +105,39 @@ int main() {
       time.push(createPassengerEvent(random(START_TIME, END_TIME),
                                       2, 
                                       STATIONS[start_station_index],
-                                      &waiting_list[STATIONS[start_station_index]],
                                       STATIONS[end_station_index]));
   }
 
   while (!time.empty()) {
     Event * event = time.top();
-    if (event->get_event_type() == "PassengerEvent") {
-      std::cout<<event->execute();
+    if (event->get_event_type() == "Passenger Event") {
+      PassengerEvent* passengerEvent = dynamic_cast<PassengerEvent*>(event); //I don't love this.
+      waiting_list[passengerEvent->get_start_stop_name()].push(passengerEvent->execute());
     }
     else if (event-> get_event_type() == "SubwayCarEvent"){
-
+      std::cout << "";
     }
     else{
       //Create new exception called event not found
       throw EventNotFoundException();
     }
-
-    delete event;
     time.pop();
+    delete event;
+    
   }
 
   print("Event Queue after loop: ", time);
   std::cout << "----------------" << std::endl;
   print("Waiting List after loop: ", waiting_list);
+  for (int i = 0; i < sizeof(STATIONS)/sizeof(std::string); i++) {
+      std::queue<Person*>* clear_list = &waiting_list[STATIONS[i]];
+      while (!clear_list->empty()) {
+          Person * person_to_delete = clear_list->front();
+          clear_list->pop();
+          delete person_to_delete;
+
+      }
+
+  }
   return 0;
 }
